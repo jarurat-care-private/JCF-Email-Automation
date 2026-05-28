@@ -166,78 +166,16 @@ for _, row in timeline_df.iterrows():
         break
 
 # =========================================
-# MANUAL FALLBACK
+# AUTO EXIT FOR GITHUB ACTIONS
 # =========================================
 
 if current_campaign is None:
 
-    print(
-        "\nNo campaign scheduled right now."
+    write_log(
+        "No campaign scheduled right now."
     )
 
-    user_date = input(
-        "\nEnter date "
-        "(dd/mm/yyyy): "
-    )
-
-    matching_rows = timeline_df[
-
-        pd.to_datetime(
-            timeline_df["Date"]
-        ).dt.strftime("%d/%m/%Y")
-
-        == user_date
-    ]
-
-    if len(matching_rows) == 0:
-
-        print(
-            "\nNo campaigns found "
-            "for this date."
-        )
-
-        exit()
-
-    if len(matching_rows) > 1:
-
-        print(
-            "\nMultiple campaigns found:"
-        )
-
-        for idx, row in matching_rows.iterrows():
-
-            print(
-                f"{row['Time']} -> "
-                f"{row['Subject Line']}"
-            )
-
-        user_time = input(
-            "\nEnter time "
-            "(HH:MM): "
-        )
-
-        matching_rows = matching_rows[
-
-            matching_rows["Time"]
-            .astype(str)
-            .str.strip()
-            .str.zfill(5)
-
-            == user_time.strip().zfill(5)
-        ]
-
-    if len(matching_rows) == 0:
-
-        print(
-            "\nNo campaign found "
-            "for selected time."
-        )
-
-        exit()
-
-    current_campaign = (
-        matching_rows.iloc[0]
-    )
+    exit()
 
 campaign = current_campaign
 
