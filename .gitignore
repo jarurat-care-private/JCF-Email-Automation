@@ -1,0 +1,4 @@
+.env*
+logs*
+failed_emails*
+users_to_email*
