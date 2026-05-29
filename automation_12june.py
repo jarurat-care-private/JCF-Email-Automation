@@ -133,37 +133,40 @@ timeline_df = pd.read_csv(
 )
 
 # =========================================
-# FIND CURRENT CAMPAIGN
+# FIND CURRENT CAMPAIGN (With 15-Min Delay Window)
 # =========================================
 
 timeline_df["combined_datetime"] = pd.to_datetime(
-
     timeline_df["Date"].astype(str)
     + " "
     + timeline_df["Time"].astype(str)
-
 )
 
 now = datetime.now()
-
 current_campaign = None
+
+write_log(f"System checking time logic. Current server time: {now.strftime('%H:%M:%S')}")
 
 for _, row in timeline_df.iterrows():
 
-    campaign_time = row[
-        "combined_datetime"
-    ]
+    campaign_time = row["combined_datetime"]
 
+    # 1. Verify Date Matches Today Exactly
     if (
         campaign_time.year == now.year
         and campaign_time.month == now.month
         and campaign_time.day == now.day
-        and campaign_time.hour == now.hour
-        and campaign_time.minute == now.minute
     ):
+        
+        # 2. Calculate the difference in minutes between real-time and scheduled time
+        # (now - campaign_time) gives positive minutes if the script is running late
+        time_difference_minutes = (now - campaign_time).total_seconds() / 60.0
 
-        current_campaign = row
-        break
+        # 3. ALLOW RUN IF: It is exactly on time (0 mins) OR up to 15 minutes late
+        if 0.0 <= time_difference_minutes <= 15.0:
+            current_campaign = row
+            write_log(f"Campaign matched successfully! Found a slot scheduled at {campaign_time.strftime('%H:%M')} (Script ran {round(time_difference_minutes, 1)} minutes late).")
+            break
 
 # =========================================
 # AUTO EXIT FOR GITHUB ACTIONS
@@ -172,13 +175,12 @@ for _, row in timeline_df.iterrows():
 if current_campaign is None:
 
     write_log(
-        "No campaign scheduled right now."
+        "No campaign scheduled right now within the 15-minute window."
     )
 
     exit()
 
 campaign = current_campaign
-
 # =========================================
 # CAMPAIGN DATA
 # =========================================
