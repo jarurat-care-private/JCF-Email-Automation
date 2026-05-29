@@ -97,21 +97,6 @@ EXTRA_USERS = [
     {
         "email": "shreyatiwari6995@gmail.com",
         "first_name": "Shreya"
-    },
-
-    {
-        "email": "jaruratcare@gmail.com",
-        "first_name": "Jarurat"
-    },
-
-    {
-        "email": "joshipriyanka97.pj@gmail.com",
-        "first_name": "Priyanka"
-    },
-
-    {
-        "email": "ap24btb0a04@student.nitw.ac.in",
-        "first_name": "Pranav"
     }
 
 ]
