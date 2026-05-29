@@ -5,7 +5,7 @@ import pandas as pd
 
 from requests.auth import HTTPBasicAuth
 from postmarker.core import PostmarkClient
-from datetime import datetime, date
+from datetime import datetime, date, timedelta, timezone
 from dotenv import load_dotenv
 
 import os
@@ -118,7 +118,7 @@ timeline_df = pd.read_csv(
 )
 
 # =========================================
-# FIND CURRENT CAMPAIGN (With 15-Min Delay Window)
+# FIND CURRENT CAMPAIGN (Fixed for IST Time Zone)
 # =========================================
 
 timeline_df["combined_datetime"] = pd.to_datetime(
@@ -127,10 +127,13 @@ timeline_df["combined_datetime"] = pd.to_datetime(
     + timeline_df["Time"].astype(str)
 )
 
-now = datetime.now()
+# Force the server to calculate exactly in Indian Standard Time (UTC + 5:30)
+ist_timezone = timezone(timedelta(hours=5, minutes=30))
+now = datetime.now(ist_timezone).replace(tzinfo=None) 
+
 current_campaign = None
 
-write_log(f"System checking time logic. Current server time: {now.strftime('%H:%M:%S')}")
+write_log(f"System checking time logic. Current IST server time: {now.strftime('%H:%M:%S')}")
 
 for _, row in timeline_df.iterrows():
 
@@ -143,11 +146,10 @@ for _, row in timeline_df.iterrows():
         and campaign_time.day == now.day
     ):
         
-        # 2. Calculate the difference in minutes between real-time and scheduled time
-        # (now - campaign_time) gives positive minutes if the script is running late
+        # 2. Calculate the difference in minutes
         time_difference_minutes = (now - campaign_time).total_seconds() / 60.0
 
-        # 3. ALLOW RUN IF: It is exactly on time (0 mins) OR up to 15 minutes late
+        # 3. Allow run if exactly on time OR up to 15 minutes late
         if 0.0 <= time_difference_minutes <= 15.0:
             current_campaign = row
             write_log(f"Campaign matched successfully! Found a slot scheduled at {campaign_time.strftime('%H:%M')} (Script ran {round(time_difference_minutes, 1)} minutes late).")
