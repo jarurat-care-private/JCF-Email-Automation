@@ -206,7 +206,10 @@ write_log(
     f"Using template alias: "
     f"{TEMPLATE_ALIAS}"
 )
-
+write_log(f"ACCOUNT_ID present: {bool(ACCOUNT_ID)}")
+write_log(f"CLIENT_ID present: {bool(CLIENT_ID)}")
+write_log(f"CLIENT_SECRET present: {bool(CLIENT_SECRET)}")
+write_log(f"ZOOM_MEETING_ID present: {bool(ZOOM_MEETING_ID)}")
 # =========================================
 # GENERATE ZOOM TOKEN
 # =========================================
