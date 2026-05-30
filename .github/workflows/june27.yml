@@ -1,16 +1,6 @@
 name: June27 Automation
 
 on:
-  schedule:
-
-    # 9:00 AM IST
-    - cron: '30 3 * * *'
-
-    # 2:00 PM IST
-    - cron: '30 8 * * *'
-
-    # 6:00 PM IST
-    - cron: '30 12 * * *'
 
   workflow_dispatch:
 
