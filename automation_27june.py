@@ -5,7 +5,7 @@ import pandas as pd
 
 from requests.auth import HTTPBasicAuth
 from postmarker.core import PostmarkClient
-from datetime import datetime, date
+from datetime import datetime, date, timedelta, timezone
 from dotenv import load_dotenv
 
 import os
@@ -145,38 +145,55 @@ timeline_df.columns = (
 )
 
 # =========================================
-# FIND CURRENT CAMPAIGN
+# FIND CURRENT CAMPAIGN (IST + 15 MIN WINDOW)
 # =========================================
 
 timeline_df["combined_datetime"] = pd.to_datetime(
-
     timeline_df["Date"].astype(str)
     + " "
     + timeline_df["Time"].astype(str)
-
 )
 
-now = datetime.now()
+ist_timezone = timezone(
+    timedelta(hours=5, minutes=30)
+)
+
+now = datetime.now(
+    ist_timezone
+).replace(tzinfo=None)
 
 current_campaign = None
 
+write_log(
+    f"Current IST time: "
+    f"{now.strftime('%Y-%m-%d %H:%M:%S')}"
+)
+
 for _, row in timeline_df.iterrows():
 
-    campaign_time = row[
-        "combined_datetime"
-    ]
+    campaign_time = row["combined_datetime"]
 
     if (
         campaign_time.year == now.year
         and campaign_time.month == now.month
         and campaign_time.day == now.day
-        and campaign_time.hour == now.hour
-        and campaign_time.minute == now.minute
     ):
 
-        current_campaign = row
-        break
+        time_difference_minutes = (
+            now - campaign_time
+        ).total_seconds() / 60.0
 
+        if 0 <= time_difference_minutes <= 15:
+
+            current_campaign = row
+
+            write_log(
+                f"Matched campaign scheduled at "
+                f"{campaign_time.strftime('%H:%M')} "
+                f"({round(time_difference_minutes,1)} minutes late)"
+            )
+
+            break
 # =========================================
 # AUTO EXIT FOR GITHUB ACTIONS
 # =========================================
