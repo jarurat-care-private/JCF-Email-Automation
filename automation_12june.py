@@ -671,7 +671,7 @@ for i in range(
         i:i + BATCH_SIZE
     ]
 
-    batch_with_extra = EXTRA_USERS
+    batch_with_extra = batch + EXTRA_USERS
    #)
 
     write_log(
@@ -683,12 +683,7 @@ for i in range(
 
         try:
 
-            write_log(
-                f"TEST MODE -> "
-                f"Email would be sent to "
-                f"{user['email']} | "
-                f"Name='{user['first_name']}'"
-            )
+          
 
             
             postmark.emails.send_with_template(
@@ -705,8 +700,13 @@ for i in range(
                     "Name":
                     user["first_name"]
 
-                }
-
+                })
+            
+            write_log(
+                f"LIVE MODE -> "
+                f"Email sent to "
+                f"{user['email']} | "
+                f"Name='{user['first_name']}'"
             )
             
 
