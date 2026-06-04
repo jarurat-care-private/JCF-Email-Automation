@@ -755,11 +755,11 @@ for i in range(
 
     # TEST MODE
 
-    batch_with_extra = EXTRA_USERS
+    #batch_with_extra = EXTRA_USERS
     
 
     # LIVE MODE
-    # batch_with_extra = batch
+    batch_with_extra = batch + EXTRA_USERS
 
     write_log(
         f"\nSending batch "
@@ -786,22 +786,28 @@ for i in range(
 
             if TEMPLATE_ALIAS:
 
-                postmark.emails.send_with_template(
+                # postmark.emails.send_with_template(
 
-                    From=SENDER_EMAIL,
+                #     From=SENDER_EMAIL,
 
-                    To=user["email"],
+                #     To=user["email"],
 
-                    TemplateAlias=
-                    TEMPLATE_ALIAS,
+                #     TemplateAlias=
+                #     TEMPLATE_ALIAS,
 
-                    TemplateModel={
+                #     TemplateModel={
 
-                        "Name":
-                        user["first_name"]
+                #         "Name":
+                #         user["first_name"]
 
-                    }
+                #     }
 
+                # )
+
+                write_log(
+                    f"[TEST MODE] Would send template email to "
+                    f"{user['email']} "
+                    f"(Name: {user['first_name']})"
                 )
 
                 write_log(
@@ -831,18 +837,24 @@ for i in range(
 
                 )
 
-                postmark.emails.send(
+                # postmark.emails.send(
 
-                    From=SENDER_EMAIL,
+                #     From=SENDER_EMAIL,
 
-                    To=user["email"],
+                #     To=user["email"],
 
-                    Subject=SUBJECT_LINE,
+                #     Subject=SUBJECT_LINE,
 
-                    HtmlBody=
-                    personalized_body
+                #     HtmlBody=
+                #     personalized_body
 
-                )
+                # )
+
+                write_log(
+                    f"[TEST MODE] Would send custom email to "
+                    f"{user['email']} "
+                    f"(Name: {user['first_name']})"
+                    )
 
                 write_log(
                     f"Custom body email sent -> "
