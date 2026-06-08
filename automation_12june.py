@@ -97,21 +97,6 @@ EXTRA_USERS = [
     {
         "email": "shreyatiwari6995@gmail.com",
         "first_name": "Shreya"
-    },
-
-    {
-        "email": "jaruratcare@gmail.com",
-        "first_name": "Jarurat"
-    },
-
-    {
-        "email": "joshipriyanka97.pj@gmail.com",
-        "first_name": "Priyanka"
-    },
-
-    {
-        "email": "ap24btb0a04@student.nitw.ac.in",
-        "first_name": "Pranav"
     }
 
 ]
@@ -674,13 +659,12 @@ for i in range(
     batch_with_extra = batch + EXTRA_USERS
    #)
 
-    write_log(
-        f"\nSending batch "
-        f"{i // BATCH_SIZE + 1}"
-    )
+    batch_no = (i // BATCH_SIZE) + 1
+    write_log(f"STARTING BATCH {batch_no}")
+    write_log(f"Batch size: {len(batch)} + extras: {len(EXTRA_USERS)}")
 
     for user in batch_with_extra:
-
+        write_log(f"START -> {user['email']}")
         try:
 
           
@@ -702,12 +686,7 @@ for i in range(
 
                 })
             
-            write_log(
-                f"LIVE MODE -> "
-                f"Email sent to "
-                f"{user['email']} | "
-                f"Name='{user['first_name']}'"
-            )
+            write_log(f"DONE -> {user['email']}")
             
 
         except Exception as e:
@@ -730,15 +709,14 @@ for i in range(
                 str(e)
             })
 
+    write_log(f"BATCH {batch_no} COMPLETED")
+
     if i + BATCH_SIZE < len(users):
 
-        write_log(
-            "Waiting between batches..."
-        )
+        write_log(f"Entering sleep for {WAIT_TIME} seconds...")
+        time.sleep(WAIT_TIME)
+        write_log("Sleep finished")
 
-        time.sleep(
-            WAIT_TIME
-        )
 
 # =========================================
 # EXPORT FAILED EMAILS
