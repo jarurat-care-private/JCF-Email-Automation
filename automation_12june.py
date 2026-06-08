@@ -681,21 +681,21 @@ for i in range(
           
 
             
-            # postmark.emails.send_with_template(
+            postmark.emails.send_with_template(
 
-            #     From=SENDER_EMAIL,
+                From=SENDER_EMAIL,
 
-            #     To=user["email"],
+                To=user["email"],
 
-            #     TemplateAlias=
-            #     TEMPLATE_ALIAS,
+                TemplateAlias=
+                TEMPLATE_ALIAS,
 
-            #     TemplateModel={
+                TemplateModel={
 
-            #         "Name":
-            #         user["first_name"]
+                    "Name":
+                    user["first_name"]
 
-            #     })
+                })
             
             write_log(f"DONE -> {user['email']}")
             
