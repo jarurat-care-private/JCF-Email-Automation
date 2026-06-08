@@ -472,6 +472,10 @@ users = []
 failed_emails = []
 
 seen_emails = set()
+row_index = 0
+duplicate_count = 0
+registered_skip_count = 0
+processed_count = 0
 
 # =========================================
 # JUNE 12
@@ -518,6 +522,10 @@ if campaign_date == june_12:
 # =========================================
 
 for row in reader:
+    row_index += 1
+
+    if row_index % 100 == 0:
+        write_log(f"Processed rows: {row_index}")
 
     raw_email = row.get(
         "email"
@@ -612,7 +620,10 @@ write_log(
     f"Users to email: "
     f"{len(users)}"
 )
-
+write_log(f"Row processing completed")
+write_log(f"Total rows: {row_index}")
+write_log(f"Duplicates: {duplicate_count}")
+write_log(f"Registered skips: {registered_skip_count}")
 # =========================================
 # EXPORT FILTERED USERS
 # =========================================
