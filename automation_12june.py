@@ -667,7 +667,7 @@ for i in range(
         i:i + BATCH_SIZE
     ]
 
-    batch_with_extra =  EXTRA_USERS
+    batch_with_extra = batch + EXTRA_USERS
    #)
 
     batch_no = (i // BATCH_SIZE) + 1
