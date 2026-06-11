@@ -103,23 +103,23 @@ EXTRA_USERS = [
 
     {
         "email": "shreyatiwari6995@gmail.com",
-        "first_name": "Shreya"}
-    # },
+        "first_name": "Shreya"
+    },
 
-    # {
-    #     "email": "jaruratcare@gmail.com",
-    #     "first_name": "Jarurat"
-    # },
+    {
+        "email": "jaruratcare@gmail.com",
+        "first_name": "Jarurat"
+    },
 
-    # {
-    #     "email": "joshipriyanka97.pj@gmail.com",
-    #     "first_name": "Priyanka"
-    # },
+    {
+        "email": "joshipriyanka97.pj@gmail.com",
+        "first_name": "Priyanka"
+    },
 
-    # {
-    #     "email": "ap24btb0a04@student.nitw.ac.in",
-    #     "first_name": "Pranav"
-    # }
+    {
+        "email": "ap24btb0a04@student.nitw.ac.in",
+        "first_name": "Pranav"
+    }
 
 ]
 
@@ -798,72 +798,72 @@ for i in range(
 
             write_log(f"START -> {user['email']}")
 
-            # =========================================
-            # TEMPLATE MODE
-            # =========================================
+            =========================================
+            TEMPLATE MODE
+            =========================================
 
-            # if TEMPLATE_ALIAS:
+            if TEMPLATE_ALIAS:
 
-            #     postmark.emails.send_with_template(
+                postmark.emails.send_with_template(
 
-            #         From=SENDER_EMAIL,
+                    From=SENDER_EMAIL,
 
-            #         To=user["email"],
+                    To=user["email"],
 
-            #         TemplateAlias=
-            #         TEMPLATE_ALIAS,
+                    TemplateAlias=
+                    TEMPLATE_ALIAS,
 
-            #         TemplateModel={
+                    TemplateModel={
 
-            #             "Name":
-            #             user["first_name"]
+                        "Name":
+                        user["first_name"]
 
-            #         }
+                    }
 
-            #     )
-
-                
-
-            write_log(f"DONE -> {user['email']}")
-
-            # =========================================
-            # CUSTOM EMAIL BODY MODE
-            # =========================================
-
-            # else:
-
-            #     personalized_body = (
-
-            #         FULL_EMAIL_BODY
-
-            #         .replace(
-            #             "[Name]",
-            #             user["first_name"]
-            #         )
-
-            #         .replace(
-            #             "{{Name}}",
-            #             user["first_name"]
-            #         )
-
-            #     )
-
-                # postmark.emails.send(
-
-                #     From=SENDER_EMAIL,
-
-                #     To=user["email"],
-
-                #     Subject=SUBJECT_LINE,
-
-                #     HtmlBody=
-                #     personalized_body
-
-                # )
+                )
 
                 
 
-                # write_log(f"DONE -> {user['email']}")
+                write_log(f"DONE -> {user['email']}")
+
+            =========================================
+            CUSTOM EMAIL BODY MODE
+            =========================================
+
+            else:
+
+                personalized_body = (
+
+                    FULL_EMAIL_BODY
+
+                    .replace(
+                        "[Name]",
+                        user["first_name"]
+                    )
+
+                    .replace(
+                        "{{Name}}",
+                        user["first_name"]
+                    )
+
+                )
+
+                postmark.emails.send(
+
+                    From=SENDER_EMAIL,
+
+                    To=user["email"],
+
+                    Subject=SUBJECT_LINE,
+
+                    HtmlBody=
+                    personalized_body
+
+                )
+
+                
+
+                write_log(f"DONE -> {user['email']}")
 
         except Exception as e:
 
