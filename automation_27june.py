@@ -785,10 +785,10 @@ for i in range(
     # LIVE MODE
     batch_with_extra = batch + EXTRA_USERS
 
-    write_log(
-        f"\nSending batch "
-        f"{i // BATCH_SIZE + 1}"
-    )
+    batch_no = (i // BATCH_SIZE) + 1
+
+    write_log(f"STARTING BATCH {batch_no}")
+    write_log(f"Batch size: {len(batch)} + extras: {len(EXTRA_USERS)}")
 
     for user in batch_with_extra:
 
@@ -796,13 +796,7 @@ for i in range(
 
         try:
 
-            write_log(
-
-                f"Sending mail to "
-                f"{user['email']} | "
-                f"Name='{user['first_name']}'"
-
-            )
+            write_log(f"START -> {user['email']}")
 
             # =========================================
             # TEMPLATE MODE
@@ -830,10 +824,7 @@ for i in range(
 
                 
 
-            write_log(
-                f"Template email sent -> "
-                f"{user['email']}"
-            )
+            write_log(f"DONE -> {user['email']}")
 
             # =========================================
             # CUSTOM EMAIL BODY MODE
@@ -872,10 +863,7 @@ for i in range(
 
                 
 
-                # write_log(
-                #     f"Custom body email sent -> "
-                #     f"{user['email']}"
-                # )
+                # write_log(f"DONE -> {user['email']}")
 
         except Exception as e:
 
@@ -900,13 +888,9 @@ for i in range(
 
     if i + BATCH_SIZE < len(users):
 
-        write_log(
-            "Waiting between batches..."
-        )
-
-        time.sleep(
-            WAIT_TIME
-        )
+        write_log(f"Entering sleep for {WAIT_TIME} seconds...")
+        time.sleep(WAIT_TIME)
+        write_log("Sleep finished")
 
 # =========================================
 # EXPORT FAILED EMAILS
