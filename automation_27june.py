@@ -103,23 +103,23 @@ EXTRA_USERS = [
 
     {
         "email": "shreyatiwari6995@gmail.com",
-        "first_name": "Shreya"
-    },
+        "first_name": "Shreya"}
+    # },
 
-    {
-        "email": "jaruratcare@gmail.com",
-        "first_name": "Jarurat"
-    },
+    # {
+    #     "email": "jaruratcare@gmail.com",
+    #     "first_name": "Jarurat"
+    # },
 
-    {
-        "email": "joshipriyanka97.pj@gmail.com",
-        "first_name": "Priyanka"
-    },
+    # {
+    #     "email": "joshipriyanka97.pj@gmail.com",
+    #     "first_name": "Priyanka"
+    # },
 
-    {
-        "email": "ap24btb0a04@student.nitw.ac.in",
-        "first_name": "Pranav"
-    }
+    # {
+    #     "email": "ap24btb0a04@student.nitw.ac.in",
+    #     "first_name": "Pranav"
+    # }
 
 ]
 
@@ -274,6 +274,11 @@ write_log(
     f"Using template alias: "
     f"{TEMPLATE_ALIAS}"
 )
+
+write_log(f"ACCOUNT_ID present: {bool(ACCOUNT_ID)}")
+write_log(f"CLIENT_ID present: {bool(CLIENT_ID)}")
+write_log(f"CLIENT_SECRET present: {bool(CLIENT_SECRET)}")
+write_log(f"ZOOM_MEETING_ID present: {bool(ZOOM_MEETING_ID)}")
 
 # =========================================
 # GENERATE ZOOM TOKEN
@@ -563,6 +568,11 @@ failed_emails = []
 
 seen_emails = set()
 
+row_index = 0
+duplicate_count = 0
+registered_skip_count = 0
+processed_count = 0
+
 # =========================================
 # EVENT DAY
 # =========================================
@@ -608,6 +618,11 @@ if campaign_date == EVENT_DAY:
 
 for row in reader:
 
+    row_index += 1
+
+    if row_index % 100 == 0:
+        write_log(f"Processed rows: {row_index}")
+
     raw_email = row.get(
         "email"
     )
@@ -627,6 +642,8 @@ for row in reader:
 
     if email in seen_emails:
 
+        duplicate_count += 1
+
         write_log(
             f"Duplicate skipped: "
             f"{email}"
@@ -637,6 +654,8 @@ for row in reader:
     if campaign_date < EVENT_DAY:
 
         if email in zoom_emails:
+
+            registered_skip_count += 1
 
             write_log(
                 f"Skipped registered user: "
@@ -695,6 +714,11 @@ write_log(
     f"Users to email: "
     f"{len(users)}"
 )
+
+write_log("Row processing completed")
+write_log(f"Total rows: {row_index}")
+write_log(f"Duplicates: {duplicate_count}")
+write_log(f"Registered skips: {registered_skip_count}")
 
 # =========================================
 # EXPORT FILTERED USERS
@@ -784,25 +808,25 @@ for i in range(
             # TEMPLATE MODE
             # =========================================
 
-            if TEMPLATE_ALIAS:
+            # if TEMPLATE_ALIAS:
 
-                postmark.emails.send_with_template(
+            #     postmark.emails.send_with_template(
 
-                    From=SENDER_EMAIL,
+            #         From=SENDER_EMAIL,
 
-                    To=user["email"],
+            #         To=user["email"],
 
-                    TemplateAlias=
-                    TEMPLATE_ALIAS,
+            #         TemplateAlias=
+            #         TEMPLATE_ALIAS,
 
-                    TemplateModel={
+            #         TemplateModel={
 
-                        "Name":
-                        user["first_name"]
+            #             "Name":
+            #             user["first_name"]
 
-                    }
+            #         }
 
-                )
+            #     )
 
                 
 
@@ -833,18 +857,18 @@ for i in range(
 
                 )
 
-                postmark.emails.send(
+                # postmark.emails.send(
 
-                    From=SENDER_EMAIL,
+                #     From=SENDER_EMAIL,
 
-                    To=user["email"],
+                #     To=user["email"],
 
-                    Subject=SUBJECT_LINE,
+                #     Subject=SUBJECT_LINE,
 
-                    HtmlBody=
-                    personalized_body
+                #     HtmlBody=
+                #     personalized_body
 
-                )
+                # )
 
                 
 
