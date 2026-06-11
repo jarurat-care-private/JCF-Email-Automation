@@ -839,23 +839,23 @@ for i in range(
             # CUSTOM EMAIL BODY MODE
             # =========================================
 
-            else:
+            # else:
 
-                personalized_body = (
+            #     personalized_body = (
 
-                    FULL_EMAIL_BODY
+            #         FULL_EMAIL_BODY
 
-                    .replace(
-                        "[Name]",
-                        user["first_name"]
-                    )
+            #         .replace(
+            #             "[Name]",
+            #             user["first_name"]
+            #         )
 
-                    .replace(
-                        "{{Name}}",
-                        user["first_name"]
-                    )
+            #         .replace(
+            #             "{{Name}}",
+            #             user["first_name"]
+            #         )
 
-                )
+            #     )
 
                 # postmark.emails.send(
 
