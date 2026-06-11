@@ -830,10 +830,10 @@ for i in range(
 
                 
 
-                write_log(
-                    f"Template email sent -> "
-                    f"{user['email']}"
-                )
+            write_log(
+                f"Template email sent -> "
+                f"{user['email']}"
+            )
 
             # =========================================
             # CUSTOM EMAIL BODY MODE
