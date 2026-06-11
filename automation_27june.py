@@ -872,10 +872,10 @@ for i in range(
 
                 
 
-                write_log(
-                    f"Custom body email sent -> "
-                    f"{user['email']}"
-                )
+                # write_log(
+                #     f"Custom body email sent -> "
+                #     f"{user['email']}"
+                # )
 
         except Exception as e:
 
