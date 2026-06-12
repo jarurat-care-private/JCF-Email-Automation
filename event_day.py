@@ -21,7 +21,7 @@ load_dotenv()
 
 CAMPAIGNS = [
     {
-        "time": "17:03",
+        "time": "18:30",
         "template": "code-your-own-33"
     },
     {
