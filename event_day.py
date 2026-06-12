@@ -13,7 +13,7 @@ import os
 # LOAD ENV
 # =========================================
 
-load_dotenv(".env")
+load_dotenv()
 
 # =========================================
 # CAMPAIGN SCHEDULE
@@ -21,7 +21,7 @@ load_dotenv(".env")
 
 CAMPAIGNS = [
     {
-        "time": "18:30",
+        "time": "13:16",
         "template": "registered-doctors-1"
     },
     {
