@@ -21,20 +21,20 @@ load_dotenv()
 
 CAMPAIGNS = [
     {
-        "time": "13:16",
-        "template": "registered-doctors-1"
+        "time": "16:36",
+        "template": "code-your-own-33"
     },
     {
         "time": "19:00",
-        "template": "registered-doctors-2"
+        "template": "code-your-own-34"
     },
     {
         "time": "19:30",
-        "template": "registered-doctors-3"
+        "template": "code-your-own-35"
     },
     {
         "time": "20:00",
-        "template": "registered-doctors-4"
+        "template": "code-your-own-36"
     }
 ]
 
@@ -83,23 +83,23 @@ EXTRA_USERS = [
 
     {
         "email": "shreyatiwari6995@gmail.com",
-        "first_name": "Shreya"
-    },
+        "first_name": "Shreya"}
+    # },
 
-    {
-        "email": "jaruratcare@gmail.com",
-        "first_name": "Jarurat"
-    },
+    # {
+    #     "email": "jaruratcare@gmail.com",
+    #     "first_name": "Jarurat"
+    # },
 
-    {
-        "email": "joshipriyanka97.pj@gmail.com",
-        "first_name": "Priyanka"
-    },
+    # {
+    #     "email": "joshipriyanka97.pj@gmail.com",
+    #     "first_name": "Priyanka"
+    # },
 
-    {
-        "email": "ap24btb0a04@student.nitw.ac.in",
-        "first_name": "Pranav"
-    }
+    # {
+    #     "email": "ap24btb0a04@student.nitw.ac.in",
+    #     "first_name": "Pranav"
+    # }
 
 ]
 
@@ -414,7 +414,7 @@ for i in range(
     ]
 
     batch_with_extra = (
-        batch +
+        # batch +
         EXTRA_USERS
     )
 
@@ -438,34 +438,34 @@ for i in range(
                 f"START -> {user['email']}"
             )
 
-            # postmark.emails.send_with_template(
+            postmark.emails.send_with_template(
 
-            #     From=SENDER_EMAIL,
+                From=SENDER_EMAIL,
 
-            #     To=user[
-            #         "email"
-            #     ],
+                To=user[
+                    "email"
+                ],
 
-            #     TemplateAlias=
-            #     TEMPLATE_ALIAS,
+                TemplateAlias=
+                TEMPLATE_ALIAS,
 
-            #     TemplateModel={
+                TemplateModel={
 
-            #         "Name":
-            #         user.get(
-            #             "first_name",
-            #             ""
-            #         ),
+                    "Name":
+                    user.get(
+                        "first_name",
+                        ""
+                    ),
 
-            #         "FullName":
-            #         (
-            #             f"{user.get('first_name','')} "
-            #             f"{user.get('last_name','')}"
-            #         ).strip()
+                    "FullName":
+                    (
+                        f"{user.get('first_name','')} "
+                        f"{user.get('last_name','')}"
+                    ).strip()
 
-            #     }
+                }
 
-            # )
+            )
 
             write_log(
                 f"DONE -> {user['email']}"
