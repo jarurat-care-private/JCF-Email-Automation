@@ -21,7 +21,7 @@ load_dotenv()
 
 CAMPAIGNS = [
     {
-        "time": "16:36",
+        "time": "18:30",
         "template": "code-your-own-33"
     },
     {
@@ -43,7 +43,7 @@ CAMPAIGNS = [
 # =========================================
 
 BATCH_SIZE = 40
-WAIT_TIME = 9
+WAIT_TIME = 90
 
 # =========================================
 # ENV VARIABLES
@@ -83,23 +83,23 @@ EXTRA_USERS = [
 
     {
         "email": "shreyatiwari6995@gmail.com",
-        "first_name": "Shreya"}
-    # },
+        "first_name": "Shreya"
+    },
 
-    # {
-    #     "email": "jaruratcare@gmail.com",
-    #     "first_name": "Jarurat"
-    # },
+    {
+        "email": "jaruratcare@gmail.com",
+        "first_name": "Jarurat"
+    },
 
-    # {
-    #     "email": "joshipriyanka97.pj@gmail.com",
-    #     "first_name": "Priyanka"
-    # },
+    {
+        "email": "joshipriyanka97.pj@gmail.com",
+        "first_name": "Priyanka"
+    },
 
-    # {
-    #     "email": "ap24btb0a04@student.nitw.ac.in",
-    #     "first_name": "Pranav"
-    # }
+    {
+        "email": "ap24btb0a04@student.nitw.ac.in",
+        "first_name": "Pranav"
+    }
 
 ]
 
@@ -414,7 +414,7 @@ for i in range(
     ]
 
     batch_with_extra = (
-        # batch +
+        batch +
         EXTRA_USERS
     )
 
