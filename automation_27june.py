@@ -946,11 +946,6 @@ write_log(
 )
 
 write_log(
-    f"Actual attempts: "
-    f"{total_attempted}"
-)
-
-write_log(
     f"Failed emails: "
     f"{len(failed_emails)}"
 )
