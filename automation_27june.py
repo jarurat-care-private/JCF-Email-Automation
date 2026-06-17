@@ -16,6 +16,8 @@ import os
 
 load_dotenv(".env.27june")
 
+DB_COLUMN = os.getenv("DB_COLUMN")
+
 # =========================================
 # LOG FUNCTION
 # =========================================
@@ -221,7 +223,7 @@ SUBJECT_LINE = str(
 
 CSV_FILE = str(
     campaign.get(
-        "Database Link",
+        DB_COLUMN,
         ""
     )
 ).strip()
@@ -804,23 +806,23 @@ for i in range(
 
             if TEMPLATE_ALIAS:
 
-                postmark.emails.send_with_template(
+                # postmark.emails.send_with_template(
 
-                    From=SENDER_EMAIL,
+                #     From=SENDER_EMAIL,
 
-                    To=user["email"],
+                #     To=user["email"],
 
-                    TemplateAlias=
-                    TEMPLATE_ALIAS,
+                #     TemplateAlias=
+                #     TEMPLATE_ALIAS,
 
-                    TemplateModel={
+                #     TemplateModel={
 
-                        "Name":
-                        user["first_name"]
+                #         "Name":
+                #         user["first_name"]
 
-                    }
+                #     }
 
-                )
+                # )
 
                 
 
@@ -848,18 +850,18 @@ for i in range(
 
                 )
 
-                postmark.emails.send(
+                # postmark.emails.send(
 
-                    From=SENDER_EMAIL,
+                #     From=SENDER_EMAIL,
 
-                    To=user["email"],
+                #     To=user["email"],
 
-                    Subject=SUBJECT_LINE,
+                #     Subject=SUBJECT_LINE,
 
-                    HtmlBody=
-                    personalized_body
+                #     HtmlBody=
+                #     personalized_body
 
-                )
+                # )
 
                 
 
@@ -896,42 +898,41 @@ for i in range(
 # EXPORT FAILED EMAILS
 # =========================================
 
-if failed_emails:
+with open(
+    "failed_emails_27june.txt",
+    "w",
+    encoding="utf-8"
+) as failed_file:
 
-    with open(
+    if failed_emails:
 
-        "failed_emails_27june.csv",
+        for item in failed_emails:
 
-        mode="w",
+            failed_file.write(
+                f"Email: {item['email']}\n"
+            )
 
-        newline="",
+            failed_file.write(
+                f"Name: {item['first_name']}\n"
+            )
 
-        encoding="utf-8"
+            failed_file.write(
+                f"Error: {item['error']}\n"
+            )
 
-    ) as failed_file:
+            failed_file.write(
+                "-" * 80 + "\n"
+            )
 
-        writer = csv.DictWriter(
+    else:
 
-            failed_file,
-
-            fieldnames=[
-                "email",
-                "first_name",
-                "error"
-            ]
-
+        failed_file.write(
+            "No failed emails found.\n"
         )
 
-        writer.writeheader()
-
-        writer.writerows(
-            failed_emails
-        )
-
-    write_log(
-        "Failed emails exported"
-    )
-
+write_log(
+    "Failed emails report exported"
+)
 # =========================================
 # SUMMARY
 # =========================================
