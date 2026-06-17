@@ -1,17 +1,22 @@
 name: June27 Automation
 
 on:
-
   workflow_dispatch:
 
 jobs:
-
   run-script:
+    strategy:
+      matrix:
+        db_column:
+          - Database Link 1
+          - Database Link 2
+          - Database Link 3
+          - Database Link 4
+          - Database Link 5
 
     runs-on: ubuntu-latest
 
     steps:
-
       - name: Checkout Repo
         uses: actions/checkout@v4
 
@@ -31,6 +36,7 @@ jobs:
           echo "CLIENT_ID=${{ secrets.CLIENT_ID_27 }}" >> .env.27june
           echo "CLIENT_SECRET=${{ secrets.CLIENT_SECRET_27 }}" >> .env.27june
           echo "ZOOM_MEETING_ID=${{ secrets.ZOOM_MEETING_ID_27 }}" >> .env.27june
+          echo "DB_COLUMN=${{ matrix.db_column }}" >> .env.27june
 
       - name: Run Automation
         run: python automation_27june.py
@@ -39,14 +45,14 @@ jobs:
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: failed-emails
-          path: failed_emails_27june.csv
+          name: failed-emails-${{ matrix.db_column }}
+          path: failed_emails_27june.txt
           if-no-files-found: ignore
 
       - name: Upload Logs
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: automation-logs
+          name: automation-logs-${{ matrix.db_column }}
           path: logs_27june.txt
           if-no-files-found: ignore
