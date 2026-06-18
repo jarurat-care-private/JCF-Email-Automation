@@ -132,7 +132,12 @@ EXTRA_USERS = [
 postmark = PostmarkClient(
     server_token=SERVER_API_TOKEN
 )
-
+if SERVER_API_TOKEN:
+    write_log(
+        f"Postmark Server Token loaded: ****{SERVER_API_TOKEN[-4:]}"
+    )
+else:
+    write_log("Postmark Server Token NOT FOUND")
 # =========================================
 # READ TIMELINE
 # =========================================
