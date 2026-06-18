@@ -806,7 +806,7 @@ for i in range(
 
             if TEMPLATE_ALIAS:
 
-                postmark.emails.send_with_template(
+                response = postmark.emails.send_with_template(
 
                     From=SENDER_EMAIL,
 
@@ -826,8 +826,8 @@ for i in range(
 
                 
 
-                write_log(f"DONE -> {user['email']}")
-
+                write_log(f"DONE -> {user['email']} | MessageID: {response['MessageID']}")
+                write_log(f"Postmark response: {response}")
             # =========================================
             # CUSTOM EMAIL BODY MODE
             # =========================================
@@ -850,7 +850,7 @@ for i in range(
 
                 )
 
-                postmark.emails.send(
+                response = postmark.emails.send(
 
                     From=SENDER_EMAIL,
 
@@ -865,7 +865,8 @@ for i in range(
 
                 
 
-                write_log(f"DONE -> {user['email']}")
+                write_log(f"DONE -> {user['email']} | MessageID: {response['MessageID']}")
+                write_log(f"Postmark response: {response}")
 
         except Exception as e:
 
