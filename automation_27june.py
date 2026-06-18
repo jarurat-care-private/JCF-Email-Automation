@@ -806,23 +806,23 @@ for i in range(
 
             if TEMPLATE_ALIAS:
 
-                # postmark.emails.send_with_template(
+                postmark.emails.send_with_template(
 
-                #     From=SENDER_EMAIL,
+                    From=SENDER_EMAIL,
 
-                #     To=user["email"],
+                    To=user["email"],
 
-                #     TemplateAlias=
-                #     TEMPLATE_ALIAS,
+                    TemplateAlias=
+                    TEMPLATE_ALIAS,
 
-                #     TemplateModel={
+                    TemplateModel={
 
-                #         "Name":
-                #         user["first_name"]
+                        "Name":
+                        user["first_name"]
 
-                #     }
+                    }
 
-                # )
+                )
 
                 
 
@@ -850,18 +850,18 @@ for i in range(
 
                 )
 
-                # postmark.emails.send(
+                postmark.emails.send(
 
-                #     From=SENDER_EMAIL,
+                    From=SENDER_EMAIL,
 
-                #     To=user["email"],
+                    To=user["email"],
 
-                #     Subject=SUBJECT_LINE,
+                    Subject=SUBJECT_LINE,
 
-                #     HtmlBody=
-                #     personalized_body
+                    HtmlBody=
+                    personalized_body
 
-                # )
+                )
 
                 
 
