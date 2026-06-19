@@ -1,0 +1,58 @@
+name: June27 Automation
+
+on:
+  workflow_dispatch:
+
+jobs:
+  run-script:
+    strategy:
+      matrix:
+        db_column:
+          - Database 1
+          - Database 2
+          - Database 3
+          - Database 4
+          - Database 5
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install Dependencies
+        run: pip install -r requirements.txt
+
+      - name: Create ENV File
+        run: |
+          echo "SERVER_API_TOKEN=${{ secrets.SERVER_API_TOKEN_HORIZON_INTERNATIONAL }}" >> .env.27june
+          echo "SENDER_EMAIL=${{ secrets.SENDER_EMAIL_27 }}" >> .env.27june
+          echo "ACCOUNT_ID=${{ secrets.ACCOUNT_ID_27 }}" >> .env.27june
+          echo "CLIENT_ID=${{ secrets.CLIENT_ID_27 }}" >> .env.27june
+          echo "CLIENT_SECRET=${{ secrets.CLIENT_SECRET_27 }}" >> .env.27june
+          echo "ZOOM_MEETING_ID=${{ secrets.ZOOM_MEETING_ID_27 }}" >> .env.27june
+          echo "DB_COLUMN=${{ matrix.db_column }}" >> .env.27june
+
+      - name: Run Automation
+        run: python automation_27june.py
+
+      - name: Upload Failed Emails
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: failed-emails-${{ matrix.db_column }}
+          path: failed_emails_27june.txt
+          if-no-files-found: ignore
+
+      - name: Upload Logs
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: automation-logs-${{ matrix.db_column }}
+          path: logs_27june.txt
+          if-no-files-found: ignore
