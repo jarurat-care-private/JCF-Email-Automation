@@ -58,8 +58,8 @@ TIMELINE_FILE = (
 # BATCH CONTROL
 # =========================================
 
-BATCH_SIZE = 160
-WAIT_TIME = 100
+BATCH_SIZE = 190
+WAIT_TIME = 90
 
 # =========================================
 # IMPORTANT EVENT DATES
